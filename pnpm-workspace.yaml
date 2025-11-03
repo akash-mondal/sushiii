@@ -1,0 +1,7 @@
+packages:
+  - 'api'
+  - 'app'
+  - 'sdk/browser'
+  - 'sdk/node'
+  - 'verifier'
+  - 'lib'

@@ -1,0 +1,69 @@
+#!/bin/bash
+
+set -e
+
+COMMAND=${1:-"help"}
+
+case $COMMAND in
+  start-genesis)
+    echo "Starting Euclid development environment from genesis..."
+    echo "This will start a 3-node Constellation cluster"
+
+    if ! command -v docker &> /dev/null; then
+      echo "Error: Docker is not installed"
+      exit 1
+    fi
+
+    echo "Note: You need to have the Euclid SDK installed to run this."
+    echo "Visit: https://github.com/Constellation-Labs/euclid-development-environment"
+    echo ""
+    echo "Run the following commands in the Euclid directory:"
+    echo "  ./scripts/hydra install"
+    echo "  ./scripts/hydra build"
+    echo "  ./scripts/hydra start-genesis"
+    ;;
+
+  status)
+    echo "Checking Euclid cluster status..."
+    echo ""
+    echo "Expected containers:"
+    echo "  - Global L0 (port 9000)"
+    echo "  - Metagraph L0 nodes (ports 9200, 9210, 9220)"
+    echo "  - Currency L1 nodes (ports 9300+)"
+    echo "  - Data L1 nodes (ports 9400+)"
+    echo ""
+    docker ps --filter "name=euclid" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+    ;;
+
+  stop)
+    echo "Stopping Euclid containers..."
+    docker stop $(docker ps -q --filter "name=euclid") 2>/dev/null || echo "No Euclid containers running"
+    ;;
+
+  logs)
+    SERVICE=${2:-"metagraph-l0-1"}
+    echo "Showing logs for $SERVICE..."
+    docker logs -f "$SERVICE"
+    ;;
+
+  clean)
+    echo "Cleaning up Euclid environment..."
+    ./scripts/hydra stop
+    docker rm $(docker ps -a -q --filter "name=euclid") 2>/dev/null || echo "No containers to remove"
+    echo "Done"
+    ;;
+
+  *)
+    echo "Sushiii Hydra Management Script"
+    echo ""
+    echo "Usage: ./scripts/hydra [command]"
+    echo ""
+    echo "Commands:"
+    echo "  start-genesis  - Instructions to start fresh Euclid environment"
+    echo "  status         - Check running container status"
+    echo "  stop           - Stop all running containers"
+    echo "  logs [service] - Show logs for a service (default: metagraph-l0-1)"
+    echo "  clean          - Stop and remove all containers"
+    echo "  help           - Show this help message"
+    ;;
+esac
