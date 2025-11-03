@@ -1,0 +1,33 @@
+{
+  "name": "@sushiii/sdk-browser",
+  "version": "0.1.0",
+  "description": "Browser SDK for Sushiii consent capture",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "consent",
+    "privacy",
+    "constellation",
+    "blockchain"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.0"
+  }
+}

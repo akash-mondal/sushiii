@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+.pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Scala/SBT
+target/
+project/target/
+project/project/
+*.jar
+!project/*.jar
+*.class
+*.log
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.development
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+*.lcov
+
+# Temporary files
+*.tmp
+*.bak
